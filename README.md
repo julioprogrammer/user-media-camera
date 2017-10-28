@@ -1,4 +1,4 @@
-react-user-media
+user-media-camera
 ================
 
 Provides components for access to audio and webcam
@@ -7,11 +7,11 @@ Instalation
 -----------
 
 ```
-npm install react-user-media
+npm install user-media-camera
 ```
 
 ```
-import Webcam from "react-user-media";
+import Webcam from "user-media-camera";
 ```
 
 Webcam
