@@ -5,8 +5,8 @@ const config = {
   entry: path.resolve(__dirname, "src/index.js"),
   output: {
     path: path.resolve(__dirname, "build"),
-    filename: "react-user-media.js",
-    library: "react-user-media",
+    filename: "user-media-camera.js",
+    library: "user-media-camera",
     libraryTarget: "umd"
   },
   resolve: {
@@ -14,7 +14,7 @@ const config = {
     extensions: ["", ".js"] // allow require without extension
   },
   plugins: [
-    new WebpackNotifierPlugin({ title: "react-user-media" })
+    new WebpackNotifierPlugin({ title: "user-media-camera" })
   ],
   module: {
     preLoaders: [
