@@ -1,19 +1,6 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 
 class Webcam extends Component {
-  static propTypes = {
-    audio: PropTypes.bool,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    captureFormat: PropTypes.oneOf([
-      "image/png",
-      "image/jpeg",
-      "image/webp"
-    ]),
-    onSuccess: PropTypes.func,
-    onFailure: PropTypes.func,
-  };
-
   static defaultProps = {
     audio: true,
     video: true,
@@ -88,16 +75,12 @@ class Webcam extends Component {
       audio: this.props.audio,
     };
 
-    navigator.getUserMedia(
-      constraints,
-      (stream) => {
+    navigator.mediaDevices.getUserMedia(constraints)
+      .then((stream) => {
         const video = this._video;
 
-        if (window.URL) {
-          video.src = window.URL.createObjectURL(stream);
-        } else {
-          video.src = stream;
-        }
+        window.stream = stream;
+        video.srcObject = stream;
 
         this._mediaStream = stream;
 
@@ -107,12 +90,10 @@ class Webcam extends Component {
         });
 
         this.props.onSuccess();
-      },
-      (error) => {
+      })
+      .catch((error) => {
         this.props.onFailure(error);
-      }
-    );
-
+      });
   }
 
   _getCanvas() {
@@ -147,7 +128,7 @@ class Webcam extends Component {
 
   captureScreenshot() {
     const { captureFormat } = this.props;
-    const canvas = this.captureCanvas()
+    const canvas = this.captureCanvas();
     if (canvas) {
       return canvas.toDataURL(captureFormat);
     }
@@ -166,6 +147,7 @@ class Webcam extends Component {
         height={height}
         ref={(component) => this._video = component}
         autoPlay
+        playsInline
       />
     )
   }
